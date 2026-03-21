@@ -1,0 +1,10 @@
+streamlit
+pandas
+pillow
+reportlab
+opencv-python
+numpy
+openai
+bcrypt
+supabase
+rapidocr-onnxruntime
