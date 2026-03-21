@@ -15,12 +15,52 @@ from reportlab.lib.units import mm
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+import sys
 
-# 注册中文字体
-try:
-    pdfmetrics.registerFont(TTFont('SimHei', 'C:\\Windows\\Fonts\\simhei.ttf'))
-except Exception:
-    pass
+# 尝试注册中文字体，兼容多系统
+CHINESE_FONT_NAME = "SimHei"
+FONT_REGISTERED = False
+
+def register_chinese_font():
+    global FONT_REGISTERED
+    if FONT_REGISTERED:
+        return
+    
+    font_paths = []
+    
+    # Windows字体路径
+    if sys.platform == "win32":
+        font_paths = [
+            'C:\\Windows\\Fonts\\simhei.ttf',
+            'C:\\Windows\\Fonts\\simsun.ttc',
+        ]
+    
+    # macOS字体路径
+    elif sys.platform == "darwin":
+        font_paths = [
+            '/System/Library/Fonts/PingFang.ttc',
+            '/Library/Fonts/Arial Unicode.ttf',
+            '/System/Library/Fonts/STHeiti Light.ttc',
+        ]
+    
+    # Linux字体路径
+    else:
+        font_paths = [
+            '/usr/share/fonts/truetype/wqy/wqy-microhei.ttc',
+            '/usr/share/fonts/truetype/arphic/uming.ttc',
+            '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
+        ]
+    
+    for font_path in font_paths:
+        try:
+            pdfmetrics.registerFont(TTFont(CHINESE_FONT_NAME, font_path))
+            FONT_REGISTERED = True
+            break
+        except Exception:
+            continue
+
+# 初始化时尝试注册字体
+register_chinese_font()
 
 DB_PATH = os.getenv("ESSAY_APP_DB", "essay_campus_system.db")
 APP_TITLE = "校园作文辅导系统（老师端 + 学生端 + 班级管理）"
@@ -545,12 +585,13 @@ def create_pdf_report(title: str, student_name: str, feedback: Dict[str, Any]) -
     width, height = A4
     y = height - 20 * mm
     
-    # 设置支持中文的字体
-    c.setFont("SimHei", 11)
+    # 使用注册的中文字体，如果没有注册成功则使用默认字体
+    font_name = CHINESE_FONT_NAME if FONT_REGISTERED else "Helvetica"
+    c.setFont(font_name, 11)
 
     def draw_line(text, size=11, gap=7):
         nonlocal y
-        c.setFont("SimHei", size)
+        c.setFont(font_name, size)
         c.drawString(18 * mm, y, text[:90])
         y -= gap * mm
 
