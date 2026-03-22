@@ -34,6 +34,10 @@
 
 ## 🚀 部署方式（通用于所有版本）
 
+### 🌐 在线访问
+系统已部署在Streamlit云平台，可直接访问：
+[https://campus-essay-system.streamlit.app/](https://campus-essay-system.streamlit.app/)
+
 ### 📋 环境准备
 1. 安装Python 3.8或更高版本
 2. 确保网络连接正常（用于接入AI模型）
