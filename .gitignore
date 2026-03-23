@@ -1,0 +1,20 @@
+# Log directory
+log/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Development containers
+.devcontainer/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
