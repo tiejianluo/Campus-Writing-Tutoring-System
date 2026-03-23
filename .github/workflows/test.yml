@@ -22,10 +22,31 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     
-    - name: Run tests
+    - name: Run basic functions tests
       run: |
-        python testcode/test_suite.py
+        echo "Running test_basic_functions.py..."
+        python -m unittest testcode/test_basic_functions.py
+    
+    - name: Run LLM functions tests
+      run: |
+        echo "Running test_llm_functions.py..."
+        python -m unittest testcode/test_llm_functions.py
+    
+    - name: Run system integration tests
+      run: |
+        echo "Running test_system_integration.py..."
+        python -m unittest testcode/test_system_integration.py
+    
+    - name: Run acceptance tests
+      run: |
+        echo "Running test_acceptance.py..."
+        python -m unittest testcode/test_acceptance.py
+    
+    - name: Run role auth tests
+      run: |
+        echo "Running test_role_auth.py..."
+        python -m unittest testcode/test_role_auth.py
     
     - name: Display test results
       run: |
-        echo "Test execution completed successfully!"
+        echo "All tests completed!"

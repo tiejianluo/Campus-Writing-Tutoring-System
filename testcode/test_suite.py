@@ -227,8 +227,7 @@ def main():
     print("📊 测试结果已更新到README.md文件")
     print("=" * 60)
     
-    # 等待用户输入后退出（跨平台兼容）
-    input("按回车键退出...")
+    # 直接退出，不等待用户输入（适用于CI/CD环境）
     sys.exit(0 if test_results['failed'] == 0 and test_results['errors'] == 0 else 1)
 
 
