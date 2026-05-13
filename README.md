@@ -12,7 +12,7 @@
 ![Tests](https://img.shields.io/badge/Tests-64%20v4%20checks-16A34A?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Release%20Hardened-F59E0B?style=for-the-badge)
 
-**English**
+**English / [中文](README.zh-CN.md)**
 
 [Overview](#overview) - [Target Users](#target-users) - [How It Works](#how-it-works) - [Features](#features) - [Versions](#versions) - [Run Locally](#run-locally) - [Deploy](#deploy-to-streamlit-community-cloud) - [Repository Structure](#repository-structure)
 
