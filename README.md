@@ -1,170 +1,272 @@
-# 校园作文辅导系统 📝
+# Campus Writing Tutoring System
 
-## 🎯 系统价值与功能点
+---
 
-### 💡 教育价值
-- **激发写作兴趣**：AI智能点评，鼓励性反馈，提升学生写作自信
-- **个性化辅导**：根据不同年级、作文类型提供针对性指导
-- **减轻教师负担**：自动化评分和点评，节省批改时间
-- **促进家校合作**：家长可查看学生写作成长轨迹
-- **培养写作能力**：从选题、写作到修改的全流程指导
+<div align="center">
 
-### ✨ 核心功能
+### An AI-powered Streamlit web prototype for elementary writing instruction
 
-#### 学生端功能
-- 📝 **作文创作**：支持多种作文类型（写人、写事、写景、想象作文等）
-- 🔍 **智能点评**：AI自动分析作文，给出五维评分和改进建议
-- 🖼️ **看图作文**：上传图片，生成观察提示和写作指导
-- 📚 **范文对比**：与优秀范文对比，学习写作技巧
-- 🔄 **分步改写**：提供四步改写指导，循序渐进提升写作水平
-- 📈 **成长档案**：记录写作成长轨迹，展示进步趋势
+![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Local%20DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Tests](https://img.shields.io/badge/Tests-64%20v4%20checks-16A34A?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Release%20Hardened-F59E0B?style=for-the-badge)
 
-#### 教师端功能
-- 📋 **布置作业**：批量布置作文题目，设置截止日期
-- 👥 **班级管理**：创建和管理班级，分配学生
-- 📊 **批量查看**：查看所有学生提交的作文和评分
-- 🎯 **针对性指导**：根据学生情况提供个性化建议
+**English**
 
-#### 技术特色
-- 🤖 **AI驱动**：基于先进语言模型的智能辅导
-- 💾 **数据持久化**：自动保存学生作文和成长记录
-- 📱 **界面友好**：简洁直观的操作界面，适合小学生使用
-- 🔒 **账号系统**：支持教师、学生、家长多角色登录
-- 📄 **PDF导出**：一键导出作文评语单
+[Overview](#overview) - [Target Users](#target-users) - [How It Works](#how-it-works) - [Features](#features) - [Versions](#versions) - [Run Locally](#run-locally) - [Deploy](#deploy-to-streamlit-community-cloud) - [Repository Structure](#repository-structure)
 
-## 🚀 部署方式（通用于所有版本）
+</div>
 
-### 🌐 在线访问
-系统已部署在Streamlit云平台，可直接访问：
-[https://campus-essay-system.streamlit.app/](https://campus-essay-system.streamlit.app/)
+---
 
-### 📋 环境准备
-1. 安装Python 3.8或更高版本
-2. 确保网络连接正常（用于接入AI模型）
+## Overview
 
-### 🛠️ 快速部署步骤
+**Campus Writing Tutoring System** is an AI-powered writing assistant for elementary school writing instruction. It supports students as they choose topics, draft essays, receive formative feedback, revise step by step, and track writing growth over time.
 
-#### 第一步：安装依赖
-打开命令提示符（CMD）或终端，进入对应版本文件夹，运行：
+The project is implemented as a Streamlit application with four versioned releases:
+
+- **v1**: a lightweight single-student writing tutor.
+- **v2**: a classroom-oriented version with templates, topic generation, image prompts, and local records.
+- **v3**: a complete campus version with roles, classes, assignments, SQLite persistence, and growth records.
+- **v4**: a release-hardened version with safer credential handling, security tests, performance tests, and Streamlit deployment documentation.
+
+**Public repository:** <https://github.com/tiejianluo/Campus-Writing-Tutoring-System>
+
+**Public app:** <https://campus-essay-system.streamlit.app/>
+
+## Target Users
+
+| User | What They Can Do |
+| --- | --- |
+| Students | Draft essays, receive AI feedback, compare with model-writing guidance, revise, and view growth history. |
+| Teachers | Create classes, publish writing assignments, review submissions, and monitor writing progress. |
+| Parents | View recent student writing and growth trends to support home-school collaboration. |
+| Admins | Inspect users and class data in the full campus version. |
+
+## How It Works
+
+1. A student selects a grade, genre, and topic, or starts from a teacher assignment.
+2. The student writes or uploads a draft.
+3. The system analyzes word count, structure, expression, grade expectations, and rubric fit.
+4. If an LLM key is configured, the app calls the model for JSON feedback. If no key is configured, it uses a local fallback feedback engine.
+5. Feedback is shown in teacher-facing and student-friendly forms.
+6. The app stores submissions, version history, scores, and growth records.
+
+## Features
+
+### Student Experience
+
+- Essay drafting across common elementary genres such as narrative, people, scenery, imagination, reading response, diary, and picture-based writing.
+- AI or fallback feedback with strengths, suggestions, polished sentence examples, outline advice, and step-by-step revision guidance.
+- Grade-specific word expectations and rubrics.
+- Topic generation with optional keywords.
+- Picture-writing prompts for image-based composition.
+- Model-writing comparison guidance.
+- Growth records with word-count and score trends.
+
+### Teacher Experience
+
+- Class creation and class management.
+- Assignment publishing with title, genre, prompt, grade, class, and due date.
+- Submission review with essay text, score, teacher feedback, and student feedback.
+- Batch overview of student work.
+
+### Technical Design
+
+- Streamlit web UI.
+- SQLite persistence for the v3/v4 campus versions.
+- Optional OpenAI-compatible model integration.
+- Streamlit secrets and environment-variable configuration.
+- Local fallback behavior when external AI credentials are unavailable.
+- Security checks for hardcoded secrets, password hashing, role registration boundaries, and SQL injection resistance.
+- Performance checks for text metrics, fallback feedback, topic generation, and SQLite submission paths.
+
+## Versions
+
+### Feature Matrix
+
+| Feature | v1 | v2 | v3 | v4 |
+| --- | --- | --- | --- | --- |
+| Basic essay feedback | Yes | Yes | Yes | Yes |
+| Grade-specific rubrics | No | Yes | Yes | Yes |
+| Writing templates | No | Yes | Yes | Yes |
+| Model-writing comparison | No | Yes | Yes | Yes |
+| Step-by-step revision | Yes | Yes | Yes | Yes |
+| Local data persistence | No | Yes | Yes | Yes |
+| Growth records | No | Yes | Yes | Yes |
+| Picture-writing prompts | No | Yes | Yes | Yes |
+| Topic generation | No | Yes | Yes | Yes |
+| User accounts | No | No | Yes | Yes |
+| Teacher, student, parent, admin roles | No | No | Yes | Yes |
+| Class management | No | No | Yes | Yes |
+| Assignment publishing | No | No | Yes | Yes |
+| SQLite database | No | No | Yes | Yes |
+| Streamlit secrets support | No | No | Yes | Yes |
+| Security tests | No | No | Yes | Yes |
+| Performance tests | No | No | Yes | Yes |
+
+### Version Summary
+
+| Version | Positioning | Main File | Tests |
+| --- | --- | --- | --- |
+| v1 | Minimal writing tutor for individual use | `v1/elementary_essay_tutor_app.py` | 38 |
+| v2 | Classroom writing assistant with templates and local records | `v2/elementary_essay_tutor_app_v2.py` | 49 |
+| v3 | Full campus system with roles, classes, assignments, and SQLite | `v3/campus_essay_system.py` | 64 |
+| v4 | Release-hardened campus system for GitHub and Streamlit deployment | `v4/campus_essay_system.py` | 64 |
+| latest | Root deployable version aligned with the hardened campus app | `campus_essay_system.py` | 64 |
+
+## Run Locally
+
+### Requirements
+
+- Python 3.8 or newer
+- Network access if using an external AI model
+- Optional OpenAI-compatible API key for live model feedback
+
+### Install Dependencies
+
+From the repository root:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-#### 第二步：启动应用
-在同一文件夹中运行：
+For a fixed version:
+
 ```bash
-streamlit run 文件名.py
+cd v4
+pip install -r requirements.txt
 ```
-- v1版本：`streamlit run elementary_essay_tutor_app.py`
-- v2版本：`streamlit run elementary_essay_tutor_app_v2.py`
-- v3版本：`cd v3 && streamlit run campus_essay_system.py`
-- v4版本：`cd v4 && streamlit run campus_essay_system.py`
-- 最新根目录版本：`streamlit run campus_essay_system.py`
 
-#### 第三步：访问应用
-启动后，浏览器会自动打开应用页面，或手动访问：`http://localhost:8501`
+### Start the App
 
-### 🌐 从 GitHub 部署到 Streamlit Community Cloud
+Run the latest root version:
 
-1. 将代码推送到 GitHub 仓库。
-2. 确认仓库根目录包含：
-   - `campus_essay_system.py`（最新版本入口文件）
-   - `requirements.txt`（Python 依赖）
-   - `packages.txt`（Linux apt 依赖，例如中文字体）
-3. 不要提交 `.streamlit/secrets.toml` 或 `.env`。在 Streamlit Community Cloud 的 Advanced settings 中配置：
-   - `OPENAI_API_KEY`
-   - `OPENAI_BASE_URL`（如使用兼容代理端点）
-   - `OPENAI_MODEL`
-   - `SUPABASE_URL`、`SUPABASE_KEY`（如启用云端数据库）
-4. 打开 [Streamlit Community Cloud](https://share.streamlit.io)，点击 Create app。
-5. 选择 GitHub 仓库、分支，并将 main file path 设置为 `campus_essay_system.py`。如需部署固定版本，可设置为 `v3/campus_essay_system.py` 或 `v4/campus_essay_system.py`。
-6. 如需固定 Python 版本，在 Advanced settings 中选择；保存 secrets 后部署。
-7. 部署完成后验证登录、作文点评、看图作文提示、作业布置和成长档案页面。
+```bash
+streamlit run campus_essay_system.py
+```
 
-参考官方文档：
+Run a fixed version:
+
+```bash
+cd v3
+streamlit run campus_essay_system.py
+```
+
+```bash
+cd v4
+streamlit run campus_essay_system.py
+```
+
+Then open:
+
+```text
+http://localhost:8501
+```
+
+## Configuration
+
+The app works without external AI credentials by using local fallback feedback. To enable live model feedback, configure secrets through environment variables or Streamlit Community Cloud secrets.
+
+Supported configuration keys:
+
+```text
+OPENAI_API_KEY
+OPENAI_BASE_URL
+OPENAI_MODEL
+SUPABASE_URL
+SUPABASE_KEY
+ESSAY_APP_DB
+```
+
+Do not commit local secret files. The repository ignores:
+
+```text
+.env
+.streamlit/secrets.toml
+```
+
+## Deploy to Streamlit Community Cloud
+
+1. Push the repository to GitHub.
+2. Open <https://share.streamlit.io>.
+3. Select the GitHub repository and branch.
+4. Set the main file path:
+   - latest root app: `campus_essay_system.py`
+   - fixed v3 app: `v3/campus_essay_system.py`
+   - fixed v4 app: `v4/campus_essay_system.py`
+5. Confirm that `requirements.txt` and `packages.txt` are present for the selected app path.
+6. Add secrets in Advanced settings if using live model or Supabase integration.
+7. Deploy and verify login, writing feedback, picture-writing prompts, assignment creation, and growth records.
+
+Official Streamlit references:
+
 - [Deploy your app](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy)
 - [File organization](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/file-organization)
 - [App dependencies](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/app-dependencies)
 - [Secrets management](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management)
 
-## 📈 版本演化过程
+## Tests
 
-### 🔄 功能点对比表
+Run the latest root suite:
 
-| 功能点 | v1版本 | v2版本 | v3版本 | v4版本 |
-|--------|--------|--------|--------|--------|
-| 基础作文点评 | ✅ | ✅ | ✅ | ✅ |
-| 年级分级评分 | ❌ | ✅ | ✅ | ✅ |
-| 作文模板库 | ❌ | ✅ | ✅ | ✅ |
-| 范文对比 | ❌ | ✅ | ✅ | ✅ |
-| 分步改写指导 | ❌ | ✅ | ✅ | ✅ |
-| 数据持久化 | ❌ | ✅ | ✅ | ✅ |
-| 成长档案 | ❌ | ✅ | ✅ | ✅ |
-| 看图作文 | ❌ | ✅ | ✅ | ✅ |
-| 题目生成 | ❌ | ✅ | ✅ | ✅ |
-| 账号系统 | ❌ | ❌ | ✅ | ✅ |
-| 班级管理 | ❌ | ❌ | ✅ | ✅ |
-| 作业布置 | ❌ | ❌ | ✅ | ✅ |
-| 多角色权限 | ❌ | ❌ | ✅ | ✅ |
-| 数据库存储 | ❌ | ❌ | ✅ | ✅ |
-| Streamlit secrets 配置 | ❌ | ❌ | ✅ | ✅ |
-| 安全测试 | ❌ | ❌ | ✅ | ✅ |
-| 性能测试 | ❌ | ❌ | ✅ | ✅ |
+```bash
+python testcode/test_suite.py
+```
 
-### 📊 量化统计表
+Run a fixed version suite:
 
-| 指标 | v1版本 | v2版本 | v3版本 | v4版本 |
-|------|--------|--------|--------|--------|
-| 核心功能数 | 6 | 12 | 18 | 21 |
-| 代码行数 | 320 | 710 | 1033 | 1033 |
-| 依赖包数目 | 2 | 3 | 9 | 9 |
-| 功能测试用例数 | 38 | 49 | 64 | 64 |
-| 测试代码行数 | 899 | 1322 | 1742 | 1742 |
-| 需求匹配度 | 60% | 80% | 95% | 98% |
+```bash
+cd v4
+python testcode/test_suite.py
+```
 
-### 📖 版本演进说明
+Run selected v4 categories:
 
-#### v1版本：基础版
-- **定位**：最小可行产品，实现核心作文点评功能
-- **特点**：简单易用，适合单个学生使用
-- **应用场景**：家庭辅导、个人写作练习
+```bash
+python testcode/test_suite.py basic
+python testcode/test_suite.py llm
+python testcode/test_suite.py system
+python testcode/test_suite.py acceptance
+python testcode/test_suite.py role
+python testcode/test_suite.py security
+python testcode/test_suite.py performance
+```
 
-#### v2版本：校园版
-- **定位**：增强版，增加校园场景功能
-- **特点**：支持班级使用，增加模板库、范文对比等功能
-- **应用场景**：班级教学、作文课堂
+Current validated results:
 
-#### v3版本：完整版
-- **定位**：完整校园作文辅导系统
-- **特点**：多角色支持，班级管理，数据持久化
-- **应用场景**：学校整体部署，年级统一使用
+| Suite | Result |
+| --- | --- |
+| v1 | 38 tests passed |
+| v2 | 49 tests passed |
+| v3 | 64 tests passed |
+| v4 | 64 tests passed |
+| latest root | 64 tests passed |
 
-#### v4版本：发布加固版
-- **定位**：面向 GitHub 和 Streamlit Community Cloud 发布的加固版本
-- **特点**：移除硬编码密钥，支持环境变量和 Streamlit secrets，补充安全测试、性能测试和部署文档
-- **应用场景**：公开仓库发布、云端部署前验收、持续维护
+## Repository Structure
 
-## 🎓 使用建议
+```text
+Campus-Writing-Tutoring-System/
+|-- campus_essay_system.py          # Latest deployable campus app
+|-- requirements.txt                # Python dependencies
+|-- packages.txt                    # Streamlit Cloud apt packages
+|-- testcode/                       # Latest test suite
+|-- v1/                             # Minimal writing tutor
+|-- v2/                             # Classroom writing assistant
+|-- v3/                             # Full campus system snapshot
+`-- v4/                             # Release-hardened system snapshot
+```
 
-### 小学教师
-1. **课堂教学**：使用v3版本，创建班级，布置作文作业
-2. **个性化辅导**：利用AI点评功能，重点关注学生的改进空间
-3. **家校沟通**：分享学生成长档案，让家长了解学习进展
+## Security Notes
 
-### 学生
-1. **日常练习**：使用系统进行写作练习，获取即时反馈
-2. **范文学习**：通过范文对比功能，学习优秀写作技巧
-3. **逐步提升**：按照分步改写指导，不断改进作文
+- API keys are not stored in source code.
+- Secrets should be configured via environment variables or Streamlit secrets.
+- Passwords are hashed before storage.
+- Login queries use parameterized SQL.
+- Self-registration is limited to student, teacher, and parent roles.
+- Security tests scan for OpenAI-style hardcoded keys.
 
-### 家长
-1. **监督指导**：查看孩子的写作情况和成长轨迹
-2. **配合教学**：根据系统建议，帮助孩子进行修改
-3. **鼓励支持**：关注孩子的进步，给予积极鼓励
+## Educational Value
 
-## 📞 技术支持
-
-如有问题或需要帮助，请联系系统管理员。
-
----
-
-**注意**：本系统旨在辅助作文教学，最终的教学效果还需要教师的专业指导和学生的持续练习。
+This system is designed to support writing instruction, not replace teachers. Its best use is as a formative assistant that gives students immediate feedback while helping teachers and parents see where guidance is still needed.
