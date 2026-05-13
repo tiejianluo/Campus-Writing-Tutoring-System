@@ -1,14 +1,14 @@
-# 校园作文辅导系统
+# AI驱动
 
 ---
 
 <div align="center">
 
-### 面向小学写作教学的 AI 驱动 Streamlit Web 原型
+### 面向小学写作教学系统
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-Local%20DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Local%作文辅导系统20DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 ![Tests](https://img.shields.io/badge/Tests-64%20v4%20checks-16A34A?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Release%20Hardened-F59E0B?style=for-the-badge)
 
@@ -22,7 +22,7 @@
 
 ## 项目概览
 
-**校园作文辅导系统** 是一个面向小学写作教学的 AI 写作助手。它支持学生选题、起草作文、获得形成性反馈、按步骤修改，并持续记录写作成长轨迹。
+**作文辅导系统** 是一个面向小学写作教学的 AI 写作助手。它支持学生选题、起草作文、获得形成性反馈、按步骤修改，并持续记录写作成长轨迹。
 
 本项目基于 Streamlit 实现，并保留四个版本化发布：
 
