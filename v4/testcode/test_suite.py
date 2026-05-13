@@ -1,12 +1,8 @@
 import unittest
 import sys
 import os
-import json
 import datetime
 import subprocess
-
-# 添加项目根目录到路径
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
 def check_python_installation():
@@ -55,13 +51,6 @@ def pause_before_exit():
         input("按回车键退出...")
 
 
-# 导入所有测试模块
-from test_basic_functions import TestBasicFunctions
-from test_llm_functions import TestLLMFunctions
-from test_system_integration import TestSystemIntegration
-from test_acceptance import TestAcceptance
-
-
 class TestResultCollector(unittest.TestResult):
     """自定义测试结果收集器"""
     
@@ -72,42 +61,50 @@ class TestResultCollector(unittest.TestResult):
         self.end_time = None
     
     def startTest(self, test):
+        """测试开始时记录时间"""
         self.start_time = datetime.datetime.now()
         super().startTest(test)
     
     def stopTest(self, test):
+        """测试结束时记录结果"""
         self.end_time = datetime.datetime.now()
         duration = (self.end_time - self.start_time).total_seconds()
         
-        # 记录测试结果
-        test_info = {
-            'test_name': test._testMethodName,
-            'class_name': test.__class__.__name__,
-            'status': 'passed',
-            'duration': round(duration, 4),
-            'message': ''
-        }
+        # 确定测试状态
+        status = 'passed'
+        message = ''
         
-        # 检查是否失败或出错
-        for failure in self.failures:
-            if failure[0] == test:
-                test_info['status'] = 'failed'
-                test_info['message'] = failure[1]
-                break
+        if test in self.failures:
+            status = 'failed'
+            for t, err in self.failures:
+                if t == test:
+                    message = err
+                    break
+        elif test in self.errors:
+            status = 'error'
+            for t, err in self.errors:
+                if t == test:
+                    message = err
+                    break
         
-        for error in self.errors:
-            if error[0] == test:
-                test_info['status'] = 'error'
-                test_info['message'] = error[1]
-                break
+        # 记录测试详情
+        class_name = test.__class__.__name__
+        test_name = test._testMethodName
         
-        self.test_results.append(test_info)
+        self.test_results.append({
+            'class_name': class_name,
+            'test_name': test_name,
+            'status': status,
+            'message': message,
+            'duration': duration
+        })
+        
         super().stopTest(test)
 
 
 def run_all_tests():
     """运行所有测试并收集详细结果"""
-    print("开始运行 v1 版本测试套件...")
+    print("开始运行 v4 版本测试套件...")
     print("=" * 60)
     
     # 创建测试套件
@@ -115,31 +112,34 @@ def run_all_tests():
     
     # 添加测试用例 - 使用TestLoader替代makeSuite
     loader = unittest.TestLoader()
+    
+    # 动态导入测试模块
+    from test_basic_functions import TestBasicFunctions
+    from test_llm_functions import TestLLMFunctions
+    from test_system_integration import TestSystemIntegration
+    from test_acceptance import TestAcceptance
+    from test_role_auth import TestRoleAuth
+    from test_security import TestSecurity
+    from test_performance import TestPerformance
+    
     suite.addTests(loader.loadTestsFromTestCase(TestBasicFunctions))
     suite.addTests(loader.loadTestsFromTestCase(TestLLMFunctions))
     suite.addTests(loader.loadTestsFromTestCase(TestSystemIntegration))
     suite.addTests(loader.loadTestsFromTestCase(TestAcceptance))
+    suite.addTests(loader.loadTestsFromTestCase(TestRoleAuth))
+    suite.addTests(loader.loadTestsFromTestCase(TestSecurity))
+    suite.addTests(loader.loadTestsFromTestCase(TestPerformance))
     
     # 使用自定义结果收集器运行测试
     result_collector = TestResultCollector()
     runner = unittest.TextTestRunner(resultclass=TestResultCollector, verbosity=2)
     result = runner.run(suite)
     
-    # 统计结果
-    passed = len([r for r in result.test_results if r['status'] == 'passed'])
-    failed = len([r for r in result.test_results if r['status'] == 'failed'])
-    errors = len([r for r in result.test_results if r['status'] == 'error'])
-    total = len(result.test_results)
-    
-    # 输出统计信息
-    print("\n" + "=" * 60)
-    print("📊 测试结果统计")
-    print("=" * 60)
-    print(f"总测试数: {total}")
-    print(f"通过数: {passed}")
-    print(f"失败数: {failed}")
-    print(f"错误数: {errors}")
-    print(f"通过率: {passed/total*100:.2f}%" if total > 0 else "通过率: 0%")
+    # 统计测试结果
+    total = result.testsRun
+    passed = total - len(result.failures) - len(result.errors)
+    failed = len(result.failures)
+    errors = len(result.errors)
     
     # 返回测试结果数据
     return {
@@ -155,23 +155,35 @@ def run_all_tests():
 
 def run_test_category(category):
     """按类别运行测试"""
-    print(f"\n运行 {category} 测试...")
+    print(f"开始运行 {category} 测试...")
     print("=" * 60)
     
     suite = unittest.TestSuite()
     loader = unittest.TestLoader()
     
-    if category == 'unit':
+    # 动态导入测试模块
+    from test_basic_functions import TestBasicFunctions
+    from test_llm_functions import TestLLMFunctions
+    from test_system_integration import TestSystemIntegration
+    from test_acceptance import TestAcceptance
+    from test_role_auth import TestRoleAuth
+    from test_security import TestSecurity
+    from test_performance import TestPerformance
+    
+    if category == 'basic':
         suite.addTests(loader.loadTestsFromTestCase(TestBasicFunctions))
+    elif category == 'llm':
         suite.addTests(loader.loadTestsFromTestCase(TestLLMFunctions))
     elif category == 'system':
         suite.addTests(loader.loadTestsFromTestCase(TestSystemIntegration))
     elif category == 'acceptance':
         suite.addTests(loader.loadTestsFromTestCase(TestAcceptance))
-    elif category == 'basic':
-        suite.addTests(loader.loadTestsFromTestCase(TestBasicFunctions))
-    elif category == 'llm':
-        suite.addTests(loader.loadTestsFromTestCase(TestLLMFunctions))
+    elif category == 'role':
+        suite.addTests(loader.loadTestsFromTestCase(TestRoleAuth))
+    elif category == 'security':
+        suite.addTests(loader.loadTestsFromTestCase(TestSecurity))
+    elif category == 'performance':
+        suite.addTests(loader.loadTestsFromTestCase(TestPerformance))
     else:
         print(f"未知的测试类别: {category}")
         return False
@@ -185,7 +197,7 @@ def run_test_category(category):
 def main():
     """主函数：整合批命令功能，实现跨平台一键测试"""
     print("=" * 60)
-    print("妙妙作文屋 v1 版本自动测试脚本")
+    print("妙妙作文屋 v4 版本自动测试脚本")
     print("=" * 60)
     print()
     
@@ -231,8 +243,7 @@ def main():
     print("📊 测试结果已更新到README.md文件")
     print("=" * 60)
     
-    # 仅在交互式终端中等待用户输入后退出（跨平台兼容）
-    pause_before_exit()
+    # 直接退出，不等待用户输入（适用于CI/CD环境）
     sys.exit(0 if test_results['failed'] == 0 and test_results['errors'] == 0 else 1)
 
 

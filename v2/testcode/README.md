@@ -31,17 +31,17 @@ python testcode\test_suite.py
 |----------|----------|------------|----------|
 | 单元测试 | test_basic_functions.py | 10 | 141 |
 | 单元测试 | test_llm_functions.py | 17 | 212 |
-| 系统测试 | test_system_integration.py | 10 | 225 |
-| 验收测试 | test_acceptance.py | 12 | 315 |
-| **总计** | **4个文件** | **49** | **1322** |
+| 系统测试 | test_system_integration.py | 10 | 229 |
+| 验收测试 | test_acceptance.py | 12 | 319 |
+| **总计** | **4个文件** | **49** | **1335** |
 
 ### 代码覆盖率分析
 
 | 类别 | 行数 | 占比 |
 |------|------|------|
-| 应用功能代码 | 714 | - |
-| 测试代码 | 1322 | - |
-| **测试代码覆盖率比例** | - | **1.85:1** |
+| 应用功能代码 | 727 | - |
+| 测试代码 | 1335 | - |
+| **测试代码覆盖率比例** | - | **1.84:1** |
 
 ## 🧪 单元测试设计介绍
 
@@ -269,12 +269,6 @@ python testcode\test_suite.py
 - **预期输入**: 测试记录数据
 - **预期输出**: 成长总结包含count（练习次数）、avg_words（平均字数）、avg_structure（平均结构分）、avg_language（平均表达分），计算结果准确
 
-
-
-
-
-
-
 ## 📊 测试结果可视化
 
 ### 测试结果统计
@@ -293,6 +287,6 @@ python testcode\test_suite.py
 |----------|----------|----------------------|
 | test_basic_functions.py | 0.000秒 | 0.000秒 |
 | test_llm_functions.py | 0.000秒 | 0.000秒 |
-| test_system_integration.py | 0.011秒 | 0.001秒 |
-| test_acceptance.py | 0.014秒 | 0.001秒 |
-| **总计** | **0.026秒** | **0.001秒** |
+| test_system_integration.py | 0.001秒 | 0.000秒 |
+| test_acceptance.py | 0.001秒 | 0.000秒 |
+| **总计** | **0.002秒** | **0.000秒** |

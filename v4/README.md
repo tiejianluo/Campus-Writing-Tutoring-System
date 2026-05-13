@@ -1,4 +1,6 @@
-# 校园作文辅导系统 📝
+# 校园作文辅导系统 v4 📝
+
+v4 是发布加固版：在 v3 完整校园功能基础上，强化 GitHub/Streamlit 发布流程、密钥管理、安全测试和性能测试。
 
 ## 🎯 系统价值与功能点
 
@@ -55,11 +57,7 @@ pip install -r requirements.txt
 ```bash
 streamlit run 文件名.py
 ```
-- v1版本：`streamlit run elementary_essay_tutor_app.py`
-- v2版本：`streamlit run elementary_essay_tutor_app_v2.py`
-- v3版本：`cd v3 && streamlit run campus_essay_system.py`
-- v4版本：`cd v4 && streamlit run campus_essay_system.py`
-- 最新根目录版本：`streamlit run campus_essay_system.py`
+- v4版本：`streamlit run campus_essay_system.py`
 
 #### 第三步：访问应用
 启动后，浏览器会自动打开应用页面，或手动访问：`http://localhost:8501`
@@ -67,8 +65,8 @@ streamlit run 文件名.py
 ### 🌐 从 GitHub 部署到 Streamlit Community Cloud
 
 1. 将代码推送到 GitHub 仓库。
-2. 确认仓库根目录包含：
-   - `campus_essay_system.py`（最新版本入口文件）
+2. 确认仓库根目录或 `v4/` 目录包含：
+   - `campus_essay_system.py`（v4 入口文件）
    - `requirements.txt`（Python 依赖）
    - `packages.txt`（Linux apt 依赖，例如中文字体）
 3. 不要提交 `.streamlit/secrets.toml` 或 `.env`。在 Streamlit Community Cloud 的 Advanced settings 中配置：
@@ -77,7 +75,7 @@ streamlit run 文件名.py
    - `OPENAI_MODEL`
    - `SUPABASE_URL`、`SUPABASE_KEY`（如启用云端数据库）
 4. 打开 [Streamlit Community Cloud](https://share.streamlit.io)，点击 Create app。
-5. 选择 GitHub 仓库、分支，并将 main file path 设置为 `campus_essay_system.py`。如需部署固定版本，可设置为 `v3/campus_essay_system.py` 或 `v4/campus_essay_system.py`。
+5. 选择 GitHub 仓库、分支，并将 main file path 设置为 `v4/campus_essay_system.py`。
 6. 如需固定 Python 版本，在 Advanced settings 中选择；保存 secrets 后部署。
 7. 部署完成后验证登录、作文点评、看图作文提示、作业布置和成长档案页面。
 

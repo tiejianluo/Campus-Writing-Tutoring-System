@@ -1,4 +1,6 @@
-# 校园作文辅导系统 📝
+# 校园作文辅导系统 v3 📝
+
+v3 是完整校园版：支持多角色登录、班级管理、作文布置、看图作文、历史版本对比、成长档案和 SQLite 本地数据库。
 
 ## 🎯 系统价值与功能点
 
@@ -55,11 +57,7 @@ pip install -r requirements.txt
 ```bash
 streamlit run 文件名.py
 ```
-- v1版本：`streamlit run elementary_essay_tutor_app.py`
-- v2版本：`streamlit run elementary_essay_tutor_app_v2.py`
-- v3版本：`cd v3 && streamlit run campus_essay_system.py`
-- v4版本：`cd v4 && streamlit run campus_essay_system.py`
-- 最新根目录版本：`streamlit run campus_essay_system.py`
+- v3版本：`streamlit run campus_essay_system.py`
 
 #### 第三步：访问应用
 启动后，浏览器会自动打开应用页面，或手动访问：`http://localhost:8501`
@@ -67,8 +65,8 @@ streamlit run 文件名.py
 ### 🌐 从 GitHub 部署到 Streamlit Community Cloud
 
 1. 将代码推送到 GitHub 仓库。
-2. 确认仓库根目录包含：
-   - `campus_essay_system.py`（最新版本入口文件）
+2. 确认仓库根目录或 `v3/` 目录包含：
+   - `campus_essay_system.py`（v3 入口文件）
    - `requirements.txt`（Python 依赖）
    - `packages.txt`（Linux apt 依赖，例如中文字体）
 3. 不要提交 `.streamlit/secrets.toml` 或 `.env`。在 Streamlit Community Cloud 的 Advanced settings 中配置：
@@ -77,7 +75,7 @@ streamlit run 文件名.py
    - `OPENAI_MODEL`
    - `SUPABASE_URL`、`SUPABASE_KEY`（如启用云端数据库）
 4. 打开 [Streamlit Community Cloud](https://share.streamlit.io)，点击 Create app。
-5. 选择 GitHub 仓库、分支，并将 main file path 设置为 `campus_essay_system.py`。如需部署固定版本，可设置为 `v3/campus_essay_system.py` 或 `v4/campus_essay_system.py`。
+5. 选择 GitHub 仓库、分支，并将 main file path 设置为 `v3/campus_essay_system.py`。
 6. 如需固定 Python 版本，在 Advanced settings 中选择；保存 secrets 后部署。
 7. 部署完成后验证登录、作文点评、看图作文提示、作业布置和成长档案页面。
 
@@ -91,36 +89,36 @@ streamlit run 文件名.py
 
 ### 🔄 功能点对比表
 
-| 功能点 | v1版本 | v2版本 | v3版本 | v4版本 |
-|--------|--------|--------|--------|--------|
-| 基础作文点评 | ✅ | ✅ | ✅ | ✅ |
-| 年级分级评分 | ❌ | ✅ | ✅ | ✅ |
-| 作文模板库 | ❌ | ✅ | ✅ | ✅ |
-| 范文对比 | ❌ | ✅ | ✅ | ✅ |
-| 分步改写指导 | ❌ | ✅ | ✅ | ✅ |
-| 数据持久化 | ❌ | ✅ | ✅ | ✅ |
-| 成长档案 | ❌ | ✅ | ✅ | ✅ |
-| 看图作文 | ❌ | ✅ | ✅ | ✅ |
-| 题目生成 | ❌ | ✅ | ✅ | ✅ |
-| 账号系统 | ❌ | ❌ | ✅ | ✅ |
-| 班级管理 | ❌ | ❌ | ✅ | ✅ |
-| 作业布置 | ❌ | ❌ | ✅ | ✅ |
-| 多角色权限 | ❌ | ❌ | ✅ | ✅ |
-| 数据库存储 | ❌ | ❌ | ✅ | ✅ |
-| Streamlit secrets 配置 | ❌ | ❌ | ✅ | ✅ |
-| 安全测试 | ❌ | ❌ | ✅ | ✅ |
-| 性能测试 | ❌ | ❌ | ✅ | ✅ |
+| 功能点 | v1版本 | v2版本 | v3版本 |
+|--------|--------|--------|--------|
+| 基础作文点评 | ✅ | ✅ | ✅ |
+| 年级分级评分 | ❌ | ✅ | ✅ |
+| 作文模板库 | ❌ | ✅ | ✅ |
+| 范文对比 | ❌ | ✅ | ✅ |
+| 分步改写指导 | ❌ | ✅ | ✅ |
+| 数据持久化 | ❌ | ✅ | ✅ |
+| 成长档案 | ❌ | ✅ | ✅ |
+| 看图作文 | ❌ | ✅ | ✅ |
+| 题目生成 | ❌ | ✅ | ✅ |
+| 账号系统 | ❌ | ❌ | ✅ |
+| 班级管理 | ❌ | ❌ | ✅ |
+| 作业布置 | ❌ | ❌ | ✅ |
+| 多角色权限 | ❌ | ❌ | ✅ |
+| 数据库存储 | ❌ | ❌ | ✅ |
+| Streamlit secrets 配置 | ❌ | ❌ | ✅ |
+| 安全测试 | ❌ | ❌ | ✅ |
+| 性能测试 | ❌ | ❌ | ✅ |
 
 ### 📊 量化统计表
 
-| 指标 | v1版本 | v2版本 | v3版本 | v4版本 |
-|------|--------|--------|--------|--------|
-| 核心功能数 | 6 | 12 | 18 | 21 |
-| 代码行数 | 320 | 710 | 1033 | 1033 |
-| 依赖包数目 | 2 | 3 | 9 | 9 |
-| 功能测试用例数 | 38 | 49 | 64 | 64 |
-| 测试代码行数 | 899 | 1322 | 1742 | 1742 |
-| 需求匹配度 | 60% | 80% | 95% | 98% |
+| 指标 | v1版本 | v2版本 | v3版本 |
+|------|--------|--------|--------|
+| 核心功能数 | 6 | 12 | 18 |
+| 代码行数 | 320 | 710 | 1033 |
+| 依赖包数目 | 2 | 3 | 9 |
+| 功能测试用例数 | 38 | 49 | 64 |
+| 测试代码行数 | 899 | 1322 | 1742 |
+| 需求匹配度 | 60% | 80% | 95% |
 
 ### 📖 版本演进说明
 
@@ -138,11 +136,6 @@ streamlit run 文件名.py
 - **定位**：完整校园作文辅导系统
 - **特点**：多角色支持，班级管理，数据持久化
 - **应用场景**：学校整体部署，年级统一使用
-
-#### v4版本：发布加固版
-- **定位**：面向 GitHub 和 Streamlit Community Cloud 发布的加固版本
-- **特点**：移除硬编码密钥，支持环境变量和 Streamlit secrets，补充安全测试、性能测试和部署文档
-- **应用场景**：公开仓库发布、云端部署前验收、持续维护
 
 ## 🎓 使用建议
 

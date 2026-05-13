@@ -45,6 +45,12 @@ def check_dependencies():
     return True
 
 
+def pause_before_exit():
+    """仅在交互式终端中等待用户确认退出。"""
+    if sys.stdin.isatty():
+        input("按回车键退出...")
+
+
 class TestResultCollector(unittest.TestResult):
     """自定义测试结果收集器"""
     
@@ -183,7 +189,7 @@ def main():
     # 检查Python安装
     if not check_python_installation():
         print("❌ 错误：未安装Python或Python不在系统路径中")
-        input("按回车键退出...")
+        pause_before_exit()
         sys.exit(1)
     
     print("✅ Python已安装")
@@ -192,7 +198,7 @@ def main():
     # 检查依赖
     if not check_dependencies():
         print("❌ 依赖检查失败")
-        input("按回车键退出...")
+        pause_before_exit()
         sys.exit(1)
     
     print()
@@ -222,8 +228,8 @@ def main():
     print("📊 测试结果已更新到README.md文件")
     print("=" * 60)
     
-    # 等待用户输入后退出（跨平台兼容）
-    input("按回车键退出...")
+    # 仅在交互式终端中等待用户输入后退出（跨平台兼容）
+    pause_before_exit()
     sys.exit(0 if test_results['failed'] == 0 and test_results['errors'] == 0 else 1)
 
 

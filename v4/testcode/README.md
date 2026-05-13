@@ -1,4 +1,4 @@
-# 妙妙作文屋 v3 版本测试文档 🧪
+# 妙妙作文屋 v4 版本测试文档 🧪
 
 ## 🚀 部署方式
 
@@ -410,7 +410,7 @@ python testcode\test_suite.py
 | test_llm_functions.py | 0.000秒 | 0.000秒 |
 | test_system_integration.py | 0.000秒 | 0.000秒 |
 | test_acceptance.py | 0.000秒 | 0.000秒 |
-| test_role_auth.py | 4.216秒 | 0.422秒 |
-| test_security.py | 0.114秒 | 0.016秒 |
-| test_performance.py | 0.219秒 | 0.055秒 |
-| **总计** | **4.551秒** | **0.071秒** |
+| test_role_auth.py | 4.450秒 | 0.445秒 |
+| test_security.py | 0.007秒 | 0.001秒 |
+| test_performance.py | 0.216秒 | 0.054秒 |
+| **总计** | **4.675秒** | **0.073秒** |

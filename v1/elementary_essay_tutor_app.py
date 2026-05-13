@@ -58,11 +58,22 @@ JSON_SCHEMA_HINT = {
 }
 
 
+def get_config_value(name: str, default: str = "") -> str:
+    env_value = os.getenv(name)
+    if env_value:
+        return env_value
+    try:
+        secret_value = st.secrets.get(name)
+    except Exception:
+        return default
+    return secret_value or default
+
+
 def get_client():
     if OpenAI is None:
         return None
-    api_key = "sk-bGelDOkVt64HBKNhMtgxI3v2Au04hsjohTykYSWUef0mape9"
-    base_url = "https://4.0.wokaai.com/v1/"
+    api_key = get_config_value("OPENAI_API_KEY")
+    base_url = get_config_value("OPENAI_BASE_URL", "https://4.0.wokaai.com/v1/")
     if not api_key:
         return None
     kwargs = {"api_key": api_key}

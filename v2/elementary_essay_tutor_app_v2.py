@@ -103,12 +103,25 @@ SYSTEM_PROMPT = """
 """.strip()
 
 
+def get_config_value(name: str, default: str = "") -> str:
+    env_value = os.getenv(name)
+    if env_value:
+        return env_value
+    try:
+        secret_value = st.secrets.get(name)
+    except Exception:
+        return default
+    return secret_value or default
+
+
 def get_client():
     if OpenAI is None:
         return None
-    key = "sk-bGelDOkVt64HBKNhMtgxI3v2Au04hsjohTykYSWUef0mape9"
+    key = get_config_value("OPENAI_API_KEY")
+    if not key:
+        return None
     kwargs = {"api_key": key}
-    base = "https://4.0.wokaai.com/v1/"
+    base = get_config_value("OPENAI_BASE_URL", "https://4.0.wokaai.com/v1/")
     if base:
         kwargs["base_url"] = base
     return OpenAI(**kwargs)

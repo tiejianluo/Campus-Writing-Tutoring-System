@@ -28,14 +28,18 @@ class TestAcceptance(unittest.TestCase):
     def setUp(self):
         """测试前的准备工作"""
         # 保存原始数据文件（如果存在）
+        self.had_records_file = DATA_PATH.exists()
         self.original_records = []
-        if DATA_PATH.exists():
+        if self.had_records_file:
             self.original_records = load_records()
     
     def tearDown(self):
         """测试后的清理工作"""
         # 恢复原始数据文件
-        save_records(self.original_records)
+        if self.had_records_file:
+            save_records(self.original_records)
+        elif DATA_PATH.exists():
+            DATA_PATH.unlink()
     
     def test_user_story_grade_3_narrative_essay(self):
         """测试三年级学生写记叙文的用户故事"""

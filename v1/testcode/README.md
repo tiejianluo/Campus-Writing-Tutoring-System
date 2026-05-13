@@ -185,7 +185,6 @@ python testcode\test_suite.py
 - **预期输入**: 作文内容
 - **预期输出**: 反馈包含足够数量的优点、改进建议等内容
 
-
 ## 📊 测试结果可视化
 
 ### 测试结果统计
@@ -203,7 +202,7 @@ python testcode\test_suite.py
 | 测试文件 | 测试时间 | 平均每个测试用例时间 |
 |----------|----------|----------------------|
 | test_basic_functions.py | 0.000秒 | 0.000秒 |
-| test_llm_functions.py | 0.001秒 | 0.000秒 |
+| test_llm_functions.py | 0.000秒 | 0.000秒 |
 | test_system_integration.py | 0.000秒 | 0.000秒 |
 | test_acceptance.py | 0.000秒 | 0.000秒 |
 | **总计** | **0.001秒** | **0.000秒** |

@@ -146,8 +146,7 @@ def update_readme_with_results(test_results):
             end_idx = next_section
         
         # 构建新的测试结果可视化内容
-        test_results_content = f"""
-## 📊 测试结果可视化
+        test_results_content = f"""## 📊 测试结果可视化
 
 ### 测试结果统计
 
@@ -172,7 +171,7 @@ def update_readme_with_results(test_results):
             test_results_content += failure_details
         
         # 替换内容
-        new_content = content[:start_idx] + test_results_content + content[end_idx:]
+        new_content = content[:start_idx].rstrip() + "\n\n" + test_results_content + content[end_idx:].lstrip("\n")
         content = new_content
     
     # 保存更新后的README.md
