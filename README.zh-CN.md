@@ -8,7 +8,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-Local%作文辅导系统20DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Local%20DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
 ![Tests](https://img.shields.io/badge/Tests-64%20v4%20checks-16A34A?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Release%20Hardened-F59E0B?style=for-the-badge)
 
@@ -270,4 +270,3 @@ Campus-Writing-Tutoring-System/
 ## 教育价值
 
 本系统旨在支持写作教学，而不是替代教师。它最适合作为形成性辅导工具，为学生提供即时反馈，同时帮助教师和家长了解仍需指导的地方。
-
