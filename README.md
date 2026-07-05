@@ -9,8 +9,8 @@
 ![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-Local%20DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![Tests](https://img.shields.io/badge/Tests-64%20v4%20checks-16A34A?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Release%20Hardened-F59E0B?style=for-the-badge)
+![Tests](https://img.shields.io/badge/Tests-61%20v6%20checks-16A34A?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-v6%20Release%20Candidate-F59E0B?style=for-the-badge)
 
 **English / [中文](README.zh-CN.md)**
 
@@ -22,14 +22,16 @@
 
 ## Overview
 
-**Campus Writing Tutoring System** is an AI-powered writing assistant for elementary school writing instruction. It supports students as they choose topics, draft essays, receive formative feedback, revise step by step, and track writing growth over time.
+**Campus Writing Tutoring System** is an AI-powered writing assistant for elementary school writing instruction. It supports students as they choose topics, draft essays in **Chinese and English**, receive formative feedback, revise step by step, and track writing growth over time.
 
-The project is implemented as a Streamlit application with four versioned releases:
+The project is implemented as a Streamlit application with six versioned releases:
 
 - **v1**: a lightweight single-student writing tutor.
 - **v2**: a classroom-oriented version with templates, topic generation, image prompts, and local records.
 - **v3**: a complete campus version with roles, classes, assignments, SQLite persistence, and growth records.
 - **v4**: a release-hardened version with safer credential handling, security tests, performance tests, and Streamlit deployment documentation.
+- **v5**: a modular refactor (config / storage / services / llm / ui layers) with stricter security defaults, upload limits, rate limiting, and pagination.
+- **v6**: the release-candidate for production. Adds **K12 elementary English writing** (grade-banded genres, bilingual AI feedback with grammar corrections), a fixed **revise-and-compare loop** (versions stay on one submission), **class invite codes**, and a **freemium membership** (3 free AI reviews/day; premium at 26 CNY/month or 288 CNY/year via QR payment with admin confirmation or activation codes). Ships with unit, system, and acceptance test suites.
 
 **Public repository:** <https://github.com/tiejianluo/Campus-Writing-Tutoring-System>
 
@@ -58,19 +60,27 @@ The project is implemented as a Streamlit application with four versioned releas
 ### Student Experience
 
 - Essay drafting across common elementary genres such as narrative, people, scenery, imagination, reading response, diary, and picture-based writing.
+- **English writing (v6)**: grade-banded genres from picture description and "About Me" (grades 3-4, 30-60 words) to diary, letters, and stories (grades 5-6, 60-120 words), with sentence starters, linking-word guidance, and bilingual AI feedback including per-sentence grammar corrections.
 - AI or fallback feedback with strengths, suggestions, polished sentence examples, outline advice, and step-by-step revision guidance.
+- **Revise-and-compare loop (v6)**: resubmit a rewrite as a new version of the same essay, then compare any two versions side by side with word-count and score deltas.
 - Grade-specific word expectations and rubrics.
 - Topic generation with optional keywords.
 - Picture-writing prompts for image-based composition.
 - Model-writing comparison guidance.
-- Growth records with word-count and score trends.
+- Growth records with topic, subject, word-count, and score trends.
 
 ### Teacher Experience
 
-- Class creation and class management.
-- Assignment publishing with title, genre, prompt, grade, class, and due date.
-- Submission review with essay text, score, teacher feedback, and student feedback.
+- Class creation with **invite codes (v6)**: students join the right class by entering the code at registration.
+- Assignment publishing with title, genre, subject (Chinese/English), prompt, grade, class, and due date; published assignments (including requirements) are visible to students, and teachers can review their publishing history.
+- Submission review scoped to the teacher's own classes, with essay text, score, teacher feedback, and student feedback.
 - Batch overview of student work.
+
+### Membership (v6)
+
+- Free tier: registration, writing, templates, growth records, and 3 AI reviews per day (local fallback feedback is always unlimited).
+- Premium (26 CNY/month, 288 CNY/year): unlimited AI reviews, English AI feedback with grammar corrections, picture-writing prompts, rewrite and version comparison.
+- Payment flow: the member center issues an order number shown next to a payment QR code; an admin confirms the transfer to activate the subscription. One-time activation codes are also supported. New students receive a 7-day trial.
 
 ### Technical Design
 
@@ -86,25 +96,34 @@ The project is implemented as a Streamlit application with four versioned releas
 
 ### Feature Matrix
 
-| Feature | v1 | v2 | v3 | v4 |
-| --- | --- | --- | --- | --- |
-| Basic essay feedback | Yes | Yes | Yes | Yes |
-| Grade-specific rubrics | No | Yes | Yes | Yes |
-| Writing templates | No | Yes | Yes | Yes |
-| Model-writing comparison | No | Yes | Yes | Yes |
-| Step-by-step revision | Yes | Yes | Yes | Yes |
-| Local data persistence | No | Yes | Yes | Yes |
-| Growth records | No | Yes | Yes | Yes |
-| Picture-writing prompts | No | Yes | Yes | Yes |
-| Topic generation | No | Yes | Yes | Yes |
-| User accounts | No | No | Yes | Yes |
-| Teacher, student, parent, admin roles | No | No | Yes | Yes |
-| Class management | No | No | Yes | Yes |
-| Assignment publishing | No | No | Yes | Yes |
-| SQLite database | No | No | Yes | Yes |
-| Streamlit secrets support | No | No | Yes | Yes |
-| Security tests | No | No | Yes | Yes |
-| Performance tests | No | No | Yes | Yes |
+| Feature | v1 | v2 | v3 | v4 | v5 | v6 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Basic essay feedback | Yes | Yes | Yes | Yes | Yes | Yes |
+| Grade-specific rubrics | No | Yes | Yes | Yes | Yes | Yes |
+| Writing templates | No | Yes | Yes | Yes | Yes | Yes |
+| Model-writing comparison | No | Yes | Yes | Yes | Yes | Yes |
+| Step-by-step revision | Yes | Yes | Yes | Yes | Yes | Yes |
+| Local data persistence | No | Yes | Yes | Yes | Yes | Yes |
+| Growth records | No | Yes | Yes | Yes | Yes | Yes |
+| Picture-writing prompts | No | Yes | Yes | Yes | Yes | Yes |
+| Topic generation | No | Yes | Yes | Yes | Yes | Yes |
+| User accounts | No | No | Yes | Yes | Yes | Yes |
+| Teacher, student, parent, admin roles | No | No | Yes | Yes | Yes | Yes |
+| Class management | No | No | Yes | Yes | Yes | Yes |
+| Assignment publishing | No | No | Yes | Yes | Yes | Yes |
+| SQLite database | No | No | Yes | Yes | Yes | Yes |
+| Streamlit secrets support | No | No | Yes | Yes | Yes | Yes |
+| Security tests | No | No | Yes | Yes | Yes | Yes |
+| Performance tests | No | No | Yes | Yes | No | No |
+| Modular architecture (layers) | No | No | No | No | Yes | Yes |
+| Upload limits and rate limiting | No | No | No | No | Yes | Yes |
+| Student-only public registration | No | No | No | No | Yes | Yes |
+| Assignment requirements shown to students | No | No | No | No | No | Yes |
+| Rewrite as versions + version comparison | No | No | No | No | No | Yes |
+| K12 English writing (grades 3-6) | No | No | No | No | No | Yes |
+| Class invite codes | No | No | No | No | No | Yes |
+| Freemium membership (26/month, 288/year CNY) | No | No | No | No | No | Yes |
+| Unit + system + acceptance test suites | No | No | No | No | No | Yes |
 
 ### Version Summary
 
@@ -114,7 +133,9 @@ The project is implemented as a Streamlit application with four versioned releas
 | v2 | Classroom writing assistant with templates and local records | `v2/elementary_essay_tutor_app_v2.py` | 49 |
 | v3 | Full campus system with roles, classes, assignments, and SQLite | `v3/campus_essay_system.py` | 64 |
 | v4 | Release-hardened campus system for GitHub and Streamlit deployment | `v4/campus_essay_system.py` | 64 |
-| latest | Root deployable version aligned with the hardened campus app | `campus_essay_system.py` | 64 |
+| v5 | Modular, security-hardened refactor for scale-out | `v5/campus_essay_system.py` | 19 |
+| **v6** | **Release candidate: English writing, revise loop, membership** | `v6/campus_essay_system.py` | **61** |
+| latest (root) | Root deployable version aligned with the v4 hardened campus app | `campus_essay_system.py` | 64 |
 
 ## Run Locally
 
@@ -144,6 +165,14 @@ pip install -r requirements.txt
 Run the latest root version:
 
 ```bash
+streamlit run campus_essay_system.py
+```
+
+Run the v6 release candidate (recommended):
+
+```bash
+cd v6
+pip install -r requirements.txt
 streamlit run campus_essay_system.py
 ```
 
@@ -180,6 +209,19 @@ SUPABASE_KEY
 ESSAY_APP_DB
 ```
 
+Additional v6 keys (all optional):
+
+```text
+ESSAY_APP_SEED_DEMO_USERS   # 1 to create local demo accounts (off by default)
+ESSAY_APP_DEMO_PASSWORD     # password for the demo accounts
+FREE_AI_DAILY_QUOTA         # free-tier AI reviews per day (default 3)
+PREMIUM_PRICE_MONTH         # default 26 (CNY)
+PREMIUM_PRICE_YEAR          # default 288 (CNY)
+PREMIUM_TRIAL_DAYS          # trial days for new students (default 7)
+PAYMENT_QR_MONTH_URL        # payment QR image shown for monthly orders
+PAYMENT_QR_YEAR_URL         # payment QR image shown for yearly orders
+```
+
 Do not commit local secret files. The repository ignores:
 
 ```text
@@ -193,6 +235,7 @@ Do not commit local secret files. The repository ignores:
 2. Open <https://share.streamlit.io>.
 3. Select the GitHub repository and branch.
 4. Set the main file path:
+   - v6 release candidate (recommended): `v6/campus_essay_system.py`
    - latest root app: `campus_essay_system.py`
    - fixed v3 app: `v3/campus_essay_system.py`
    - fixed v4 app: `v4/campus_essay_system.py`
@@ -208,6 +251,19 @@ Official Streamlit references:
 - [Secrets management](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management)
 
 ## Tests
+
+Run the v6 suites (unit + system + acceptance):
+
+```bash
+cd v6
+python -m unittest discover -s testcode -p 'test_*.py'   # all 61 tests
+python -m unittest testcode.test_unit_core               # unit tests
+python -m unittest testcode.test_system_flows            # system tests
+python -m unittest testcode.test_acceptance              # acceptance tests
+```
+
+The v6 acceptance suite maps one-to-one to the June 2026 manual test report
+(defects A2-A5 and B1-B4) plus security and business-requirement checks.
 
 Run the latest root suite:
 
@@ -242,29 +298,37 @@ Current validated results:
 | v2 | 49 tests passed |
 | v3 | 64 tests passed |
 | v4 | 64 tests passed |
+| v5 | 19 tests passed |
+| v6 | 61 tests passed (unit + system + acceptance) |
 | latest root | 64 tests passed |
 
 ## Repository Structure
 
 ```text
 Campus-Writing-Tutoring-System/
-|-- campus_essay_system.py          # Latest deployable campus app
+|-- campus_essay_system.py          # Root deployable campus app (v4-aligned)
 |-- requirements.txt                # Python dependencies
 |-- packages.txt                    # Streamlit Cloud apt packages
-|-- testcode/                       # Latest test suite
+|-- testcode/                       # Root test suite
+|-- To_Do.md                        # Roadmap: defect fixes, launch, membership
 |-- v1/                             # Minimal writing tutor
 |-- v2/                             # Classroom writing assistant
 |-- v3/                             # Full campus system snapshot
-`-- v4/                             # Release-hardened system snapshot
+|-- v4/                             # Release-hardened system snapshot
+|-- v5/                             # Modular security-hardened refactor
+`-- v6/                             # Release candidate: English writing,
+                                    #   revise loop, invite codes, membership
 ```
 
 ## Security Notes
 
 - API keys are not stored in source code.
 - Secrets should be configured via environment variables or Streamlit secrets.
-- Passwords are hashed before storage.
-- Login queries use parameterized SQL.
-- Self-registration is limited to student, teacher, and parent roles.
+- Passwords are hashed before storage (bcrypt, with salted PBKDF2 fallback in v5/v6).
+- Login queries use parameterized SQL; v6 also rate-limits login attempts.
+- Self-registration: student/teacher/parent in v1-v4; **students only** in v5/v6 (teachers and parents are created by admins, students join classes via invite codes).
+- v5/v6 enforce upload size/pixel limits, LLM call timeouts, and per-user rate limiting.
+- Demo accounts are disabled by default in v5/v6 and only seeded via environment variables.
 - Security tests scan for OpenAI-style hardcoded keys.
 
 ## Educational Value

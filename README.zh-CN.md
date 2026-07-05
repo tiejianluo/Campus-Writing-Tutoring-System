@@ -9,8 +9,8 @@
 ![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-Local%20DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![Tests](https://img.shields.io/badge/Tests-64%20v4%20checks-16A34A?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Release%20Hardened-F59E0B?style=for-the-badge)
+![Tests](https://img.shields.io/badge/Tests-61%20v6%20checks-16A34A?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-v6%20Release%20Candidate-F59E0B?style=for-the-badge)
 
 **[English](README.md) / 中文**
 
@@ -22,14 +22,16 @@
 
 ## 项目概览
 
-**作文辅导系统** 是一个面向小学写作教学的 AI 写作助手。它支持学生选题、起草作文、获得形成性反馈、按步骤修改，并持续记录写作成长轨迹。
+**作文辅导系统** 是一个面向小学写作教学的 AI 写作助手。它支持学生选题、**用中文和英文**起草作文、获得形成性反馈、按步骤修改，并持续记录写作成长轨迹。
 
-本项目基于 Streamlit 实现，并保留四个版本化发布：
+本项目基于 Streamlit 实现，并保留六个版本化发布：
 
 - **v1**：轻量级单学生作文辅导工具。
 - **v2**：面向课堂的版本，加入作文模板、题目生成、图片提示和本地记录。
 - **v3**：完整校园版，支持角色、班级、作业、SQLite 持久化和成长记录。
 - **v4**：发布加固版，强化密钥管理、安全测试、性能测试和 Streamlit 部署文档。
+- **v5**：模块化重构版（config / storage / services / llm / ui 分层），收紧安全默认值，加入上传限制、限流和分页。
+- **v6**：**准上线版**。新增 **K12 小学英语写作**（三—六年级分级题型、双语 AI 精批含逐句语法订正）、修正版**继续改写与版本对比闭环**（版本始终挂在同一篇作文下）、**班级邀请码**注册，以及**免费/会员分层**（免费每天 3 次 AI 点评；会员 26 元/月、288 元/年，扫码下单 + 管理员核销或激活码开通）。附带单元/系统/验收三层测试。
 
 **公开仓库：** <https://github.com/tiejianluo/Campus-Writing-Tutoring-System>
 
@@ -58,19 +60,27 @@
 ### 学生端体验
 
 - 支持记叙文、写人、写景、想象作文、读后感、日记、看图作文等常见小学作文类型。
+- **英语写作（v6）**：三—四年级看图写话、自我介绍（30—60 词），五—六年级日记、书信、小故事（60—120 词），提供句型骨架、连接词指导和双语 AI 反馈（含逐句语法拼写订正）。
 - 提供 AI 或本地回退反馈，包括优点、建议、句子润色示例、提纲建议和分步修改指导。
+- **改写对比闭环（v6）**：点评后可继续改写并保存为同一篇作文的新版本，任意两个版本可左右对比，显示字数与分数变化。
 - 提供分年级字数建议和评分标准。
 - 支持带关键词的题目生成。
 - 支持看图作文观察提示。
 - 提供范文对比式写作指导。
-- 通过字数和分数趋势展示成长记录。
+- 成长档案记录题目、科目、字数和分数趋势。
 
 ### 教师端体验
 
-- 创建和管理班级。
-- 发布作文作业，包括题目、类型、说明、年级、班级和截止日期。
-- 查看学生提交，包括作文文本、分数、教师反馈和学生反馈。
+- 创建班级并自动生成**邀请码（v6）**：学生注册时填码即自动加入正确班级。
+- 发布作文作业，包括题目、类型、科目（语文/英语）、说明、年级、班级和截止日期；作业连同布置说明推送到学生端，教师可查看已布置历史。
+- 查看本班学生提交（按教师班级隔离），包括作文文本、分数、教师反馈和学生反馈。
 - 批量浏览学生作文情况。
+
+### 会员体系（v6）
+
+- 免费版：注册、写作、模板、成长档案，每天 3 次 AI 点评（本地基础点评始终不限次）。
+- 会员（**26 元/月、288 元/年**）：不限次 AI 点评、英语 AI 精批与语法订正、看图作文、继续改写与版本对比。
+- 支付流程：会员中心生成订单号并展示收款二维码，管理员确认到账后自动开通；也支持一次性激活码。新注册学生赠送 7 天体验。
 
 ### 技术设计
 
@@ -86,25 +96,34 @@
 
 ### 功能矩阵
 
-| 功能 | v1 | v2 | v3 | v4 |
-| --- | --- | --- | --- | --- |
-| 基础作文反馈 | 是 | 是 | 是 | 是 |
-| 分年级评分标准 | 否 | 是 | 是 | 是 |
-| 作文模板 | 否 | 是 | 是 | 是 |
-| 范文对比指导 | 否 | 是 | 是 | 是 |
-| 分步修改 | 是 | 是 | 是 | 是 |
-| 本地数据持久化 | 否 | 是 | 是 | 是 |
-| 成长记录 | 否 | 是 | 是 | 是 |
-| 看图作文提示 | 否 | 是 | 是 | 是 |
-| 题目生成 | 否 | 是 | 是 | 是 |
-| 用户账号 | 否 | 否 | 是 | 是 |
-| 教师、学生、家长、管理员角色 | 否 | 否 | 是 | 是 |
-| 班级管理 | 否 | 否 | 是 | 是 |
-| 作业发布 | 否 | 否 | 是 | 是 |
-| SQLite 数据库 | 否 | 否 | 是 | 是 |
-| Streamlit secrets 支持 | 否 | 否 | 是 | 是 |
-| 安全测试 | 否 | 否 | 是 | 是 |
-| 性能测试 | 否 | 否 | 是 | 是 |
+| 功能 | v1 | v2 | v3 | v4 | v5 | v6 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 基础作文反馈 | 是 | 是 | 是 | 是 | 是 | 是 |
+| 分年级评分标准 | 否 | 是 | 是 | 是 | 是 | 是 |
+| 作文模板 | 否 | 是 | 是 | 是 | 是 | 是 |
+| 范文对比指导 | 否 | 是 | 是 | 是 | 是 | 是 |
+| 分步修改 | 是 | 是 | 是 | 是 | 是 | 是 |
+| 本地数据持久化 | 否 | 是 | 是 | 是 | 是 | 是 |
+| 成长记录 | 否 | 是 | 是 | 是 | 是 | 是 |
+| 看图作文提示 | 否 | 是 | 是 | 是 | 是 | 是 |
+| 题目生成 | 否 | 是 | 是 | 是 | 是 | 是 |
+| 用户账号 | 否 | 否 | 是 | 是 | 是 | 是 |
+| 教师、学生、家长、管理员角色 | 否 | 否 | 是 | 是 | 是 | 是 |
+| 班级管理 | 否 | 否 | 是 | 是 | 是 | 是 |
+| 作业发布 | 否 | 否 | 是 | 是 | 是 | 是 |
+| SQLite 数据库 | 否 | 否 | 是 | 是 | 是 | 是 |
+| Streamlit secrets 支持 | 否 | 否 | 是 | 是 | 是 | 是 |
+| 安全测试 | 否 | 否 | 是 | 是 | 是 | 是 |
+| 性能测试 | 否 | 否 | 是 | 是 | 否 | 否 |
+| 模块化分层架构 | 否 | 否 | 否 | 否 | 是 | 是 |
+| 上传限制与限流 | 否 | 否 | 否 | 否 | 是 | 是 |
+| 公开注册仅限学生 | 否 | 否 | 否 | 否 | 是 | 是 |
+| 学生端展示作业要求 | 否 | 否 | 否 | 否 | 否 | 是 |
+| 继续改写（版本制）+ 版本对比 | 否 | 否 | 否 | 否 | 否 | 是 |
+| K12 英语写作（三—六年级） | 否 | 否 | 否 | 否 | 否 | 是 |
+| 班级邀请码 | 否 | 否 | 否 | 否 | 否 | 是 |
+| 免费/会员分层（26 元/月、288 元/年） | 否 | 否 | 否 | 否 | 否 | 是 |
+| 单元/系统/验收三层测试 | 否 | 否 | 否 | 否 | 否 | 是 |
 
 ### 版本摘要
 
@@ -114,7 +133,9 @@
 | v2 | 带模板和本地记录的课堂作文助手 | `v2/elementary_essay_tutor_app_v2.py` | 49 |
 | v3 | 支持角色、班级、作业和 SQLite 的完整校园系统 | `v3/campus_essay_system.py` | 64 |
 | v4 | 面向 GitHub 和 Streamlit 部署的发布加固版 | `v4/campus_essay_system.py` | 64 |
-| latest | 根目录部署版本，与加固校园版保持一致 | `campus_essay_system.py` | 64 |
+| v5 | 面向扩展的模块化安全加固重构版 | `v5/campus_essay_system.py` | 19 |
+| **v6** | **准上线版：英语写作、改写闭环、会员体系** | `v6/campus_essay_system.py` | **61** |
+| latest | 根目录部署版本，与 v4 加固校园版保持一致 | `campus_essay_system.py` | 64 |
 
 ## 本地运行
 
@@ -144,6 +165,14 @@ pip install -r requirements.txt
 运行根目录最新版本：
 
 ```bash
+streamlit run campus_essay_system.py
+```
+
+运行 v6 准上线版（推荐）：
+
+```bash
+cd v6
+pip install -r requirements.txt
 streamlit run campus_essay_system.py
 ```
 
@@ -180,6 +209,19 @@ SUPABASE_KEY
 ESSAY_APP_DB
 ```
 
+v6 新增配置项（均为可选）：
+
+```text
+ESSAY_APP_SEED_DEMO_USERS   # 设为 1 创建本地演示账号（默认关闭）
+ESSAY_APP_DEMO_PASSWORD     # 演示账号密码
+FREE_AI_DAILY_QUOTA         # 免费版每日 AI 点评次数（默认 3）
+PREMIUM_PRICE_MONTH         # 月度会员价格，默认 26（元）
+PREMIUM_PRICE_YEAR          # 年度会员价格，默认 288（元）
+PREMIUM_TRIAL_DAYS          # 新学生试用天数（默认 7）
+PAYMENT_QR_MONTH_URL        # 月度订单展示的收款二维码图片
+PAYMENT_QR_YEAR_URL         # 年度订单展示的收款二维码图片
+```
+
 不要提交本地密钥文件。仓库已忽略：
 
 ```text
@@ -193,6 +235,7 @@ ESSAY_APP_DB
 2. 打开 <https://share.streamlit.io>。
 3. 选择 GitHub 仓库和分支。
 4. 设置主文件路径：
+   - v6 准上线版（推荐）：`v6/campus_essay_system.py`
    - 根目录最新应用：`campus_essay_system.py`
    - 固定 v3 应用：`v3/campus_essay_system.py`
    - 固定 v4 应用：`v4/campus_essay_system.py`
@@ -208,6 +251,19 @@ Streamlit 官方参考：
 - [Secrets management](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management)
 
 ## 测试
+
+运行 v6 三层测试套件（单元 + 系统 + 验收）：
+
+```bash
+cd v6
+python -m unittest discover -s testcode -p 'test_*.py'   # 全部 61 个测试
+python -m unittest testcode.test_unit_core               # 单元测试
+python -m unittest testcode.test_system_flows            # 系统测试
+python -m unittest testcode.test_acceptance              # 验收测试
+```
+
+v6 验收测试与 2026 年 6 月人工测试报告的缺陷编号（A2—A5、B1—B4）逐条对应，
+并覆盖安全边界与商业需求（免费额度、26/288 定价）。
 
 运行根目录最新测试套件：
 
@@ -242,29 +298,37 @@ python testcode/test_suite.py performance
 | v2 | 49 个测试通过 |
 | v3 | 64 个测试通过 |
 | v4 | 64 个测试通过 |
+| v5 | 19 个测试通过 |
+| v6 | 61 个测试通过（单元 + 系统 + 验收） |
 | 根目录最新版本 | 64 个测试通过 |
 
 ## 仓库结构
 
 ```text
 Campus-Writing-Tutoring-System/
-|-- campus_essay_system.py          # 根目录最新校园应用
+|-- campus_essay_system.py          # 根目录部署应用（与 v4 一致）
 |-- requirements.txt                # Python 依赖
 |-- packages.txt                    # Streamlit Cloud apt 依赖
-|-- testcode/                       # 根目录最新测试套件
+|-- testcode/                       # 根目录测试套件
+|-- To_Do.md                        # 路线图：缺陷修复、上线、会员体系
 |-- v1/                             # 最小作文辅导工具
 |-- v2/                             # 课堂作文助手
 |-- v3/                             # 完整校园系统快照
-`-- v4/                             # 发布加固系统快照
+|-- v4/                             # 发布加固系统快照
+|-- v5/                             # 模块化安全加固重构版
+`-- v6/                             # 准上线版：英语写作、改写闭环、
+                                    #   班级邀请码、会员体系
 ```
 
 ## 安全说明
 
 - API key 不存储在源码中。
 - 密钥应通过环境变量或 Streamlit secrets 配置。
-- 密码在存储前会进行哈希处理。
-- 登录查询使用参数化 SQL。
-- 自助注册仅限学生、教师和家长角色。
+- 密码在存储前会进行哈希处理（bcrypt；v5/v6 回退方案为加盐 PBKDF2）。
+- 登录查询使用参数化 SQL；v6 对登录尝试做了限流。
+- 自助注册：v1—v4 允许学生、教师、家长；**v5/v6 仅限学生**（教师和家长由管理员创建，学生凭班级邀请码入班）。
+- v5/v6 强制上传大小/像素限制、LLM 调用超时和按用户限流。
+- v5/v6 默认不创建演示账号，仅可通过环境变量开启。
 - 安全测试会扫描 OpenAI 风格的硬编码密钥。
 
 ## 教育价值
