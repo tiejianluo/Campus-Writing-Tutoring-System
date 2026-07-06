@@ -9,8 +9,8 @@
 ![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-Local%20DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![Tests](https://img.shields.io/badge/Tests-61%20v6%20checks-16A34A?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-v6%20Release%20Candidate-F59E0B?style=for-the-badge)
+![Tests](https://img.shields.io/badge/Tests-70%20v7%20checks-16A34A?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-v7%20Operations%20Release-16A34A?style=for-the-badge)
 
 **English / [中文](README.zh-CN.md)**
 
@@ -24,7 +24,7 @@
 
 **Campus Writing Tutoring System** is an AI-powered writing assistant for elementary school writing instruction. It supports students as they choose topics, draft essays in **Chinese and English**, receive formative feedback, revise step by step, and track writing growth over time.
 
-The project is implemented as a Streamlit application with six versioned releases:
+The project is implemented as a Streamlit application with seven versioned releases:
 
 - **v1**: a lightweight single-student writing tutor.
 - **v2**: a classroom-oriented version with templates, topic generation, image prompts, and local records.
@@ -32,6 +32,7 @@ The project is implemented as a Streamlit application with six versioned release
 - **v4**: a release-hardened version with safer credential handling, security tests, performance tests, and Streamlit deployment documentation.
 - **v5**: a modular refactor (config / storage / services / llm / ui layers) with stricter security defaults, upload limits, rate limiting, and pagination.
 - **v6**: the release-candidate for production. Adds **K12 elementary English writing** (grade-banded genres, bilingual AI feedback with grammar corrections), a fixed **revise-and-compare loop** (versions stay on one submission), **class invite codes**, and a **freemium membership** (3 free AI reviews/day; premium at 26 CNY/month or 288 CNY/year via QR payment with admin confirmation or activation codes). Ships with unit, system, and acceptance test suites.
+- **v7**: the operations release. Fixes the freemium quota semantics found in manual testing — when the daily 3 free AI reviews are used up the app now **falls back to unlimited local basic feedback instead of blocking the submission**, and every review is labeled with its source (AI / quota exhausted / no API key configured / rate-limited / AI error, with errors logged). Adds an **admin operations dashboard** (users by role, submissions, AI usage, active members, revenue, 14-day trend), **manual account activation/deactivation** (deactivated accounts cannot log in; data is kept and accounts can be re-enabled), password reset, an **AI status page with a live connection test**, and bootstrap admin creation via `ESSAY_APP_ADMIN_USER`/`ESSAY_APP_ADMIN_PASSWORD`. See the full usage guide in [`v7/README.md`](v7/README.md).
 
 **Public repository:** <https://github.com/tiejianluo/Campus-Writing-Tutoring-System>
 
@@ -125,6 +126,8 @@ The project is implemented as a Streamlit application with six versioned release
 | Freemium membership (26/month, 288/year CNY) | No | No | No | No | No | Yes |
 | Unit + system + acceptance test suites | No | No | No | No | No | Yes |
 
+v7 includes everything in v6 plus: quota fallback to unlimited local feedback, labeled feedback source with error logging, admin operations dashboard, manual account activation/deactivation with password reset, AI status page with live connection test, and bootstrap admin creation.
+
 ### Version Summary
 
 | Version | Positioning | Main File | Tests |
@@ -134,7 +137,8 @@ The project is implemented as a Streamlit application with six versioned release
 | v3 | Full campus system with roles, classes, assignments, and SQLite | `v3/campus_essay_system.py` | 64 |
 | v4 | Release-hardened campus system for GitHub and Streamlit deployment | `v4/campus_essay_system.py` | 64 |
 | v5 | Modular, security-hardened refactor for scale-out | `v5/campus_essay_system.py` | 19 |
-| **v6** | **Release candidate: English writing, revise loop, membership** | `v6/campus_essay_system.py` | **61** |
+| v6 | Release candidate: English writing, revise loop, membership | `v6/campus_essay_system.py` | 61 |
+| **v7** | **Operations release: quota fallback fix, admin dashboard, account management** | `v7/campus_essay_system.py` | **70** |
 | latest (root) | Root deployable version aligned with the v4 hardened campus app | `campus_essay_system.py` | 64 |
 
 ## Run Locally
@@ -168,13 +172,23 @@ Run the latest root version:
 streamlit run campus_essay_system.py
 ```
 
-Run the v6 release candidate (recommended):
+Run the v7 operations release (recommended):
 
 ```bash
-cd v6
+cd v7
 pip install -r requirements.txt
 streamlit run campus_essay_system.py
 ```
+
+To enable live AI feedback and create the platform admin, configure before starting:
+
+```bash
+export OPENAI_API_KEY='sk-...'
+export ESSAY_APP_ADMIN_USER='admin'
+export ESSAY_APP_ADMIN_PASSWORD='a-strong-password'
+```
+
+A full role-by-role usage guide (students, teachers, parents, admins) is in [`v7/README.md`](v7/README.md).
 
 Run a fixed version:
 
@@ -222,6 +236,13 @@ PAYMENT_QR_MONTH_URL        # payment QR image shown for monthly orders
 PAYMENT_QR_YEAR_URL         # payment QR image shown for yearly orders
 ```
 
+Additional v7 keys:
+
+```text
+ESSAY_APP_ADMIN_USER        # bootstrap admin username (created on startup if missing)
+ESSAY_APP_ADMIN_PASSWORD    # bootstrap admin password (min 8 chars)
+```
+
 Do not commit local secret files. The repository ignores:
 
 ```text
@@ -235,7 +256,8 @@ Do not commit local secret files. The repository ignores:
 2. Open <https://share.streamlit.io>.
 3. Select the GitHub repository and branch.
 4. Set the main file path:
-   - v6 release candidate (recommended): `v6/campus_essay_system.py`
+   - v7 operations release (recommended): `v7/campus_essay_system.py`
+   - v6 release candidate: `v6/campus_essay_system.py`
    - latest root app: `campus_essay_system.py`
    - fixed v3 app: `v3/campus_essay_system.py`
    - fixed v4 app: `v4/campus_essay_system.py`
@@ -252,13 +274,13 @@ Official Streamlit references:
 
 ## Tests
 
-Run the v6 suites (unit + system + acceptance):
+Run the v7 suites (unit + system + acceptance):
 
 ```bash
-cd v6
-python -m unittest discover -s testcode -p 'test_*.py'   # all 61 tests
+cd v7
+python -m unittest discover -s testcode -p 'test_*.py'   # all 70 tests
 python -m unittest testcode.test_unit_core               # unit tests
-python -m unittest testcode.test_system_flows            # system tests
+python -m unittest testcode.test_system_flows            # system tests (incl. admin backend)
 python -m unittest testcode.test_acceptance              # acceptance tests
 ```
 
@@ -300,6 +322,7 @@ Current validated results:
 | v4 | 64 tests passed |
 | v5 | 19 tests passed |
 | v6 | 61 tests passed (unit + system + acceptance) |
+| v7 | 70 tests passed (unit + system + acceptance) |
 | latest root | 64 tests passed |
 
 ## Repository Structure
@@ -316,8 +339,10 @@ Campus-Writing-Tutoring-System/
 |-- v3/                             # Full campus system snapshot
 |-- v4/                             # Release-hardened system snapshot
 |-- v5/                             # Modular security-hardened refactor
-`-- v6/                             # Release candidate: English writing,
-                                    #   revise loop, invite codes, membership
+|-- v6/                             # Release candidate: English writing,
+|                                   #   revise loop, invite codes, membership
+`-- v7/                             # Operations release: quota fallback fix,
+                                    #   admin dashboard, account management
 ```
 
 ## Security Notes
