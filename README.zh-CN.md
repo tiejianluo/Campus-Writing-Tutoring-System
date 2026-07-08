@@ -4,7 +4,7 @@
 
 <div align="center">
 
-### 面向小学写作教学系统
+### 面向K12学生设计的写作伴学系统
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
@@ -21,8 +21,6 @@
 ---
 
 ## 系统概述
-
-**作文辅导系统** 是一个面向小学写作教学的 AI 写作助手。它支持学生选题、**用中文和英文**起草作文、获得形成性反馈、按步骤修改，并持续记录写作成长轨迹。
 
 **WriteSmart** 是一款面向 K-12 学段的 AI 写作伴学系统，深度融合人工智能技术与前沿写作教学理念，将枯燥的写作任务转化为一段有温度、有方法的成长旅程。
 
