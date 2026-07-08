@@ -7,7 +7,7 @@ From blank page to proud author—write your way, with WriteSmart.
 
 <div align="center">
 
-### An AI-powered Writing Coaching System for K12 Students
+### An AI-powered writing coach that empowers K-12 students
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
