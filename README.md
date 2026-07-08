@@ -12,8 +12,8 @@ From blank page to proud author—write your way, with WriteSmart.
 ![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-Local%20DB-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
-![Tests](https://img.shields.io/badge/Tests-70%20v7%20checks-16A34A?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-v7%20Operations%20Release-16A34A?style=for-the-badge)
+![Tests](https://img.shields.io/badge/Tests-98%20v8%20checks-16A34A?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-v8%20Bilingual%20%2B%20Handwriting%20Release-16A34A?style=for-the-badge)
 
 **English / [中文](README.zh-CN.md)**
 
@@ -37,7 +37,7 @@ The system supports students across the full writing lifecycle:
 
 By combining **adaptive AI technology** with **evidence-based writing pedagogy**, WriteSmart doesn't just teach writing—it cultivates a lifelong love for expression, critical thinking, and self-reflection.
 
-The project is implemented as a Streamlit application with seven versioned releases:
+The project is implemented as a Streamlit application with eight versioned releases:
 
 - **v1**: a lightweight single-student writing tutor.
 - **v2**: a classroom-oriented version with templates, topic generation, image prompts, and local records.
@@ -46,6 +46,7 @@ The project is implemented as a Streamlit application with seven versioned relea
 - **v5**: a modular refactor (config / storage / services / llm / ui layers) with stricter security defaults, upload limits, rate limiting, and pagination.
 - **v6**: the release-candidate for production. Adds **K12 elementary English writing** (grade-banded genres, bilingual AI feedback with grammar corrections), a fixed **revise-and-compare loop** (versions stay on one submission), **class invite codes**, and a **freemium membership** (3 free AI reviews/day; premium at 26 CNY/month or 288 CNY/year via QR payment with admin confirmation or activation codes). Ships with unit, system, and acceptance test suites.
 - **v7**: the operations release. Fixes the freemium quota semantics found in manual testing — when the daily 3 free AI reviews are used up the app now **falls back to unlimited local basic feedback instead of blocking the submission**, and every review is labeled with its source (AI / quota exhausted / no API key configured / rate-limited / AI error, with errors logged). Adds an **admin operations dashboard** (users by role, submissions, AI usage, active members, revenue, 14-day trend), **manual account activation/deactivation** (deactivated accounts cannot log in; data is kept and accounts can be re-enabled), password reset, an **AI status page with a live connection test**, and bootstrap admin creation via `ESSAY_APP_ADMIN_USER`/`ESSAY_APP_ADMIN_PASSWORD`. See the full usage guide in [`v7/README.md`](v7/README.md).
+- **v8**: the bilingual + handwriting release. Adds a **fully bilingual UI (Chinese / English)** — a sidebar language switcher flips every screen (student, teacher, parent, admin, feedback, membership) between the two languages via a 240+ entry translation catalog (`app/i18n.py`), while teaching content (genres, topic banks, templates) keeps its native language. Adds **handwritten essay upload**: students photograph a handwritten essay, the vision LLM transcribes it verbatim (paragraphs kept, spelling mistakes preserved for the feedback step), and the editable transcript flows into the normal review → save → revise → compare pipeline. OCR shares the daily free AI quota (unlimited for premium; failures never consume quota), and when OCR is unavailable the student can always type instead. Ships 98 tests (all 70 v7 tests kept + 28 new i18n/OCR/acceptance tests). See [`v8/README.md`](v8/README.md).
 
 **Public repository:** <https://github.com/tiejianluo/Campus-Writing-Tutoring-System>
 
@@ -73,6 +74,8 @@ The project is implemented as a Streamlit application with seven versioned relea
 
 ### Student Experience
 
+- **Bilingual UI (v8)**: switch the whole interface between Chinese and English from the sidebar; teaching content keeps its native language.
+- **Handwritten essay upload (v8)**: photograph a handwritten essay, let the vision LLM extract the text verbatim, check and fix the transcript, then get feedback and save — the essay enters the same revise/compare/growth pipeline as typed work.
 - Essay drafting across common elementary genres such as narrative, people, scenery, imagination, reading response, diary, and picture-based writing.
 - **English writing (v6)**: grade-banded genres from picture description and "About Me" (grades 3-4, 30-60 words) to diary, letters, and stories (grades 5-6, 60-120 words), with sentence starters, linking-word guidance, and bilingual AI feedback including per-sentence grammar corrections.
 - AI or fallback feedback with strengths, suggestions, polished sentence examples, outline advice, and step-by-step revision guidance.
@@ -141,6 +144,8 @@ The project is implemented as a Streamlit application with seven versioned relea
 
 v7 includes everything in v6 plus: quota fallback to unlimited local feedback, labeled feedback source with error logging, admin operations dashboard, manual account activation/deactivation with password reset, AI status page with live connection test, and bootstrap admin creation.
 
+v8 includes everything in v7 plus: a bilingual Chinese/English UI with a live language switcher, and handwritten essay photo upload with vision-LLM text extraction feeding the standard review-and-revise pipeline.
+
 ### Version Summary
 
 | Version | Positioning | Main File | Tests |
@@ -151,7 +156,8 @@ v7 includes everything in v6 plus: quota fallback to unlimited local feedback, l
 | v4 | Release-hardened campus system for GitHub and Streamlit deployment | `v4/campus_essay_system.py` | 64 |
 | v5 | Modular, security-hardened refactor for scale-out | `v5/campus_essay_system.py` | 19 |
 | v6 | Release candidate: English writing, revise loop, membership | `v6/campus_essay_system.py` | 61 |
-| **v7** | **Operations release: quota fallback fix, admin dashboard, account management** | `v7/campus_essay_system.py` | **70** |
+| v7 | Operations release: quota fallback fix, admin dashboard, account management | `v7/campus_essay_system.py` | 70 |
+| **v8** | **Bilingual UI (CN/EN) + handwritten essay upload with OCR review** | `v8/campus_essay_system.py` | **98** |
 | latest (root) | Root deployable version aligned with the v4 hardened campus app | `campus_essay_system.py` | 64 |
 
 ## Run Locally
@@ -185,10 +191,10 @@ Run the latest root version:
 streamlit run campus_essay_system.py
 ```
 
-Run the v7 operations release (recommended):
+Run the v8 bilingual + handwriting release (recommended):
 
 ```bash
-cd v7
+cd v8
 pip install -r requirements.txt
 streamlit run campus_essay_system.py
 ```
@@ -201,7 +207,7 @@ export ESSAY_APP_ADMIN_USER='admin'
 export ESSAY_APP_ADMIN_PASSWORD='a-strong-password'
 ```
 
-A full role-by-role usage guide (students, teachers, parents, admins) is in [`v7/README.md`](v7/README.md).
+A full role-by-role usage guide (students, teachers, parents, admins) is in [`v8/README.md`](v8/README.md) and [`v7/README.md`](v7/README.md).
 
 Run a fixed version:
 
@@ -269,7 +275,8 @@ Do not commit local secret files. The repository ignores:
 2. Open <https://share.streamlit.io>.
 3. Select the GitHub repository and branch.
 4. Set the main file path:
-   - v7 operations release (recommended): `v7/campus_essay_system.py`
+   - v8 bilingual + handwriting release (recommended): `v8/campus_essay_system.py`
+   - v7 operations release: `v7/campus_essay_system.py`
    - v6 release candidate: `v6/campus_essay_system.py`
    - latest root app: `campus_essay_system.py`
    - fixed v3 app: `v3/campus_essay_system.py`
@@ -287,14 +294,23 @@ Official Streamlit references:
 
 ## Tests
 
+Run the v8 suites (unit + system + acceptance + i18n + OCR):
+
+```bash
+cd v8
+python -m unittest discover -s testcode -p 'test_*.py'   # all 98 tests
+python -m unittest testcode.test_unit_core               # unit tests
+python -m unittest testcode.test_system_flows            # system tests (incl. admin backend)
+python -m unittest testcode.test_acceptance              # acceptance (incl. bilingual + handwriting)
+python -m unittest testcode.test_i18n                    # v8: bilingual UI catalog tests
+python -m unittest testcode.test_handwriting_ocr         # v8: handwriting OCR tests
+```
+
 Run the v7 suites (unit + system + acceptance):
 
 ```bash
 cd v7
 python -m unittest discover -s testcode -p 'test_*.py'   # all 70 tests
-python -m unittest testcode.test_unit_core               # unit tests
-python -m unittest testcode.test_system_flows            # system tests (incl. admin backend)
-python -m unittest testcode.test_acceptance              # acceptance tests
 ```
 
 The v6 acceptance suite maps one-to-one to the June 2026 manual test report
@@ -336,6 +352,7 @@ Current validated results:
 | v5 | 19 tests passed |
 | v6 | 61 tests passed (unit + system + acceptance) |
 | v7 | 70 tests passed (unit + system + acceptance) |
+| v8 | 98 tests passed (all v7 tests + i18n + handwriting OCR + new acceptance) |
 | latest root | 64 tests passed |
 
 ## Repository Structure
@@ -354,8 +371,10 @@ Campus-Writing-Tutoring-System/
 |-- v5/                             # Modular security-hardened refactor
 |-- v6/                             # Release candidate: English writing,
 |                                   #   revise loop, invite codes, membership
-`-- v7/                             # Operations release: quota fallback fix,
-                                    #   admin dashboard, account management
+|-- v7/                             # Operations release: quota fallback fix,
+|                                   #   admin dashboard, account management
+`-- v8/                             # Bilingual UI (CN/EN) + handwritten essay
+                                    #   upload with vision-LLM OCR review
 ```
 
 ## Security Notes
