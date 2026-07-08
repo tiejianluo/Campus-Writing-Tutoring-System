@@ -34,9 +34,9 @@
 - **v6**：**准上线版**。新增 **K12 小学英语写作**（三—六年级分级题型、双语 AI 精批含逐句语法订正）、修正版**继续改写与版本对比闭环**（版本始终挂在同一篇作文下）、**班级邀请码**注册，以及**免费/会员分层**（免费每天 3 次 AI 点评；会员 26 元/月、288 元/年，扫码下单 + 管理员核销或激活码开通）。附带单元/系统/验收三层测试。
 - **v7**：**运营版**。修复人工测试发现的额度问题——免费额度用完后**自动回退到不限次的本地基础点评，不再拦截提交**；每条点评都标注来源与原因（AI 生成 / 额度用完 / 未配置 AI 密钥 / 限流 / AI 出错，错误写入日志）。新增**管理员运营看板**（分角色用户数、提交量、AI 用量、有效会员、收入、近 14 天趋势）、**账号人工开通/注销**（注销后无法登录、数据保留、可重新开通）、密码重置、**AI 状态页（含真实连接测试）**，以及通过 `ESSAY_APP_ADMIN_USER`/`ESSAY_APP_ADMIN_PASSWORD` 自动创建管理员。完整使用说明见 [`v7/README.md`](v7/README.md)。
 
-**公开仓库：** <https://github.com/tiejianluo/Campus-Writing-Tutoring-System>
+**代码仓库：** <https://github.com/tiejianluo/Campus-Writing-Tutoring-System>
 
-**公开应用：** <https://campus-essay-system.streamlit.app/>
+**测试应用：** <https://campus-essay-system-v7.streamlit.app/>
 
 ## 目标用户
 
