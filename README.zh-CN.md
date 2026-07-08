@@ -8,7 +8,7 @@
 
 <div align="center">
 
-### 面向K12学生的写作伴学系统
+### 面向K12学生的写作陪练系统
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
@@ -26,7 +26,7 @@
 
 ## 系统概述
 
-**WriteSmart** 是一款面向 K-12 学段的 AI 写作伴学系统，深度融合人工智能技术与前沿写作教学理念，将枯燥的写作任务转化为一段有温度、有方法的成长旅程。
+**WriteSmart** 是一款面向 K-12 学段的 AI 写作陪练系统，深度融合人工智能技术与前沿写作教学理念，将枯燥的写作任务转化为一段有温度、有方法的成长旅程。
 
 **WriteSmart 相信：** 每一个孩子都有表达的欲望，只需要被温柔地看见、被正确地引导。AI 不是替代老师，也不仅是批改工具，而是学生身边**一位耐心、专业、从不厌倦的“写作陪练”**——它读懂孩子的作品，也读懂孩子的成长。
 
