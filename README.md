@@ -1,10 +1,13 @@
-# Campus Writing Tutoring System
+# WriteSmart
 
----
+From blank page to proud author—write your way, with WriteSmart.
+
+**WriteSmart** is an AI-powered writing coach that empowers K-12 students to become confident, expressive writers through guided practice in both Chinese and English.
+
 
 <div align="center">
 
-### An AI-powered Streamlit web prototype for elementary writing instruction
+### An AI-powered Writing Coaching System for K12 Students
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.0%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
@@ -22,7 +25,17 @@
 
 ## Overview
 
-**Campus Writing Tutoring System** is an AI-powered writing assistant for elementary school writing instruction. It supports students as they choose topics, draft essays in **Chinese and English**, receive formative feedback, revise step by step, and track writing growth over time.
+**WriteSmart** is an AI-powered writing coaching system designed specifically for K-12 writing instruction. Rooted in pedagogical best practices, it transforms the often intimidating writing process into an engaging, step-by-step journey.
+
+The system supports students across the full writing lifecycle:
+
+- **Topic Discovery**: Interactive prompts and mind-mapping tools help students find ideas they genuinely care about, overcoming the blank-page anxiety.
+- **Bilingual Drafting**: Seamless support for both **Chinese and English** composition, respecting the linguistic and cultural nuances of each language.
+- **Formative Feedback**: Instead of grade-focused corrections, the AI provides **constructive, criterion-referenced feedback** that targets specific writing traits—idea development, organization, voice, word choice, sentence fluency, and conventions.
+- **Iterative Revision**: Guided, scaffolded revision workflows encourage students to act on feedback, resubmit drafts, and see tangible progress—building a growth mindset.
+- **Growth Portfolio**: Every draft, revision, and feedback interaction is archived in a personal portfolio. Students, teachers, and parents can track longitudinal development across grade levels, celebrating milestones and identifying areas for targeted support.
+
+By combining **adaptive AI technology** with **evidence-based writing pedagogy**, WriteSmart doesn't just teach writing—it cultivates a lifelong love for expression, critical thinking, and self-reflection.
 
 The project is implemented as a Streamlit application with seven versioned releases:
 
