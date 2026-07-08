@@ -26,7 +26,7 @@ def get_config_bool(name: str, default: bool = False) -> bool:
 
 @dataclass(frozen=True)
 class Settings:
-    app_title: str = "校园作文辅导系统 v7"
+    app_title: str = "写作辅导"
     db_path: str = "essay_campus_system_v7.db"
     openai_api_key: Optional[str] = None
     openai_base_url: str = "https://api.openai.com/v1"
