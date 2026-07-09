@@ -3,7 +3,8 @@
 From blank page to proud author—write your way, with WriteSmart.
 
 **WriteSmart** is an AI-powered writing coach that empowers K-12 students to become confident, expressive writers through guided practice in both Chinese and English.
-
+ 
+This system's **Educational Value** is designed to support writing instruction, not replace teachers. Its best use is as a formative assistant that gives students immediate feedback while helping teachers and parents see where guidance is still needed.
 
 <div align="center">
 
@@ -388,6 +389,4 @@ Campus-Writing-Tutoring-System/
 - Demo accounts are disabled by default in v5/v6 and only seeded via environment variables.
 - Security tests scan for OpenAI-style hardcoded keys.
 
-## Educational Value
 
-This system is designed to support writing instruction, not replace teachers. Its best use is as a formative assistant that gives students immediate feedback while helping teachers and parents see where guidance is still needed.
